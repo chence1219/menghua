@@ -1,0 +1,15 @@
+{
+    "target": "esp32s3",
+    "builds": [
+        {
+            "name": "menghua_board-ml307",
+            "sdkconfig_append": [
+                "CONFIG_USE_DEVICE_AEC=y",
+                "CONFIG_SR_NSN_NSNET2=y",
+                "CONFIG_LV_USE_GIF=y",
+                "CONFIG_LV_GIF_CACHE_DECODE_DATA=y"
+            ]
+        }
+    ]
+}
+

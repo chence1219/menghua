@@ -1,0 +1,15 @@
+{
+    "target": "esp32s3",
+    "builds": [
+        {
+            "name": "menghua_board",
+            "sdkconfig_append": [
+                "CONFIG_USE_DEVICE_AEC=y",
+                "CONFIG_SR_NSN_NSNET2=y",
+                "CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y",
+                "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=\"partitions/v1/16m_ota.csv\"",
+                "CONFIG_COMPILER_OPTIMIZATION_SIZE=y"
+            ]
+        }
+    ]
+}
