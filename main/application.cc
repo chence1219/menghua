@@ -5,6 +5,9 @@
 #include "audio_codec.h"
 #include "mqtt_protocol.h"
 #include "websocket_protocol.h"
+#if CONFIG_CONNECTION_TYPE_NERTC
+#include "nertc_protocol.h"
+#endif
 #include "assets/lang_config.h"
 #include "mcp_server.h"
 
@@ -377,14 +380,12 @@ void Application::Start() {
     // Add MCP common tools before initializing the protocol
     McpServer::GetInstance().AddCommonTools();
 
-    if (ota.HasMqttConfig()) {
-        protocol_ = std::make_unique<MqttProtocol>();
-    } else if (ota.HasWebsocketConfig()) {
-        protocol_ = std::make_unique<WebsocketProtocol>();
-    } else {
-        ESP_LOGW(TAG, "No protocol specified in the OTA config, using MQTT");
-        protocol_ = std::make_unique<MqttProtocol>();
-    }
+#if CONFIG_CONNECTION_TYPE_NERTC
+    protocol_ = std::make_unique<NeRtcProtocol>();
+#else
+    ESP_LOGW(TAG, "No protocol specified in the OTA config, using MQTT");
+    protocol_ = std::make_unique<MqttProtocol>();
+#endif
 
     protocol_->OnConnected([this]() {
         DismissAlert();

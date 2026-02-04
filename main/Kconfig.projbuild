@@ -2,7 +2,7 @@ menu "Xiaozhi Assistant"
 
 config OTA_URL
     string "Default OTA URL"
-    default "https://api.tenclass.net/xiaozhi/ota/"
+    default "https://nrtc.netease.im/v1/ota"
     help
         The application will access this URL to check for new firmwares and server address.
 
@@ -430,6 +430,29 @@ choice DISPLAY_LCD_TYPE
     config LCD_CUSTOM
         bool "自定义屏幕参数"
 endchoice
+
+config CONNECTION_TYPE_NERTC
+    bool "Enanle NERTC Protocol"
+    default y
+    help
+        使用网易云信传输
+
+if CONNECTION_TYPE_NERTC
+
+config USE_NERTC_PTT_MODE
+    bool "Enable NERTC Push-To-Talk Mode(按键对讲)"
+    default n
+    help
+        启用按键对讲模式
+
+config USE_NERTC_SERVER_AEC
+    bool "Enable NERTC Server-Side AEC"
+    default n
+    depends on !USE_NERTC_PTT_MODE && !BOARD_TYPE_DOIT_ESP32S3_EYE_6824
+    help
+        启用nertc服务器端 AEC
+
+endif
 
 choice DISPLAY_ESP32S3_KORVO2_V3
     depends on BOARD_TYPE_ESP32S3_KORVO2_V3
